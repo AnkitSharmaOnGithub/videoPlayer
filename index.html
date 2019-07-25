@@ -5,16 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Player</title>
-
-    <style></style>
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY="
-      crossorigin="anonymous"
-    />
-
+      crossorigin="anonymous"/>
   </head>
   <body>
     <h2 class="text-warning text-center">
@@ -26,7 +19,7 @@
         <div class="col-md-6 mx-auto">
           <video
             class="mx-auto"
-            src="video.mp4"
+            src="video\Improving Load Performance - Chrome DevTools 101.mp4"
             width="500px"
             autoplay="true"
             controls
@@ -52,153 +45,108 @@
         </div>
 
         <div class="col-md-3 mx-auto">
-            <p class="text-danger font-weight-bold">Mute/Unmute Volume :-</p>
-            <button class="btn btn-sm btn-success mute">Mute</button>
+          <p class="text-danger font-weight-bold">Mute/Unmute Volume :-</p>
+          <button class="btn btn-sm btn-success mute">Mute</button>
           <button class="btn btn-sm btn-danger unmute">Unmute</button>
-          </div>
+        </div>
       </div>
 
       <div class="row mb-5">
-        <div class="col-md-6 mx-auto">
+        <div class="col-md-3 mx-auto">
           <p class="text-warning font-weight-bold">Controls :-</p>
           <button class="btn btn-sm btn-success enableBtn">Enable</button>
           <button class="btn btn-sm btn-success disableBtn">Disable</button>
         </div>
-      </div>
 
-      <div class="row mb-5" id="widthRow">
         <div class="col-md-6 mx-auto">
-          <p class="text-info font-weight-bold">Width :-</p>
-          <button class="btn btn-sm btn-success w" id="initial">Initial</button>
-          <button class="btn btn-sm btn-success w" id="200">200px</button>
-          <button class="btn btn-sm btn-success w" id="400">400px</button>
-          <button class="btn btn-sm btn-success w" id="600">600px</button>
-          <button class="btn btn-sm btn-success w" id="800">800px</button>
+            <p class="text-info font-weight-bold">Width :-</p>
+            <button class="btn btn-sm btn-success w" id="initial">Initial</button>
+            <button class="btn btn-sm btn-success w" id="200">200px</button>
+            <button class="btn btn-sm btn-success w" id="300">300px</button>
+            <button class="btn btn-sm btn-success w" id="500">500px</button>
+            <button class="btn btn-sm btn-success w" id="600">600px</button>
+        </div>
+
+        <div class="col-md-3 mx-auto">
+            <p class="text-warning font-weight-bold">Seek :-</p>
+            <button class="btn btn-sm btn-success Forward">10 sec ></button>
+            <button class="btn btn-sm btn-success Backward"> < 10 sec </button>
         </div>
       </div>
     </div>
   </body>
 
   <script>
-    window.addEventListener("DOMContentLoaded", function() { 
-      //Pause & Play Control
-              document.querySelector(".pause").addEventListener("click", function() {
-                document.querySelector("video").pause();
-              });
+    window.addEventListener("DOMContentLoaded", function() {
+      //OnClick Event Constructor Using querySelector
+      var fnConstruct = function(element, event, action) {
+          document
+            .querySelector(element)
+            .addEventListener(event, function() {
+              action();
+            });
+        };
+      
+      //OnClick Event Constructor Using getElementById
+      var fnConstructById = function(element, event, action) {
+          document
+            .getElementById(element)
+            .addEventListener(event, function() {
+              action();
+            });
+        };
 
-              document.querySelector(".play").addEventListener("click", function() {
-                document.querySelector("video").play();
-              });
+
+      //Pause & Play Control
+      fnConstruct(".pause", "click", function() {document.querySelector("video").pause();});
+
+      fnConstruct(".play", "click", function() {document.querySelector("video").play();});
+        
 
       //PlayBack Control
-              document.getElementById("0.25").addEventListener("click", function() {
-                document.querySelector("video").playbackRate = 0.25;
-              });
 
-              document.getElementById("0.5").addEventListener("click", function() {
-                document.querySelector("video").playbackRate = 0.5;
-              });
-
-              document.getElementById("0.75").addEventListener("click", function() {
-                document.querySelector("video").playbackRate = 0.75;
-              });
-
-              document.getElementById("1").addEventListener("click", function() {
-                document.querySelector("video").playbackRate = 1;
-              });
-
-              document.getElementById("1.5").addEventListener("click", function() {
-                document.querySelector("video").playbackRate = 1.5;
-              });
-
-              document.getElementById("2").addEventListener("click", function() {
-                document.querySelector("video").playbackRate = 2;
-              });
+      fnConstructById("0.25", "click", function() {document.querySelector("video").playbackRate = 0.25;});
+      fnConstructById("0.5", "click", function() {document.querySelector("video").playbackRate = 0.5;});
+      fnConstructById("0.75", "click", function() {document.querySelector("video").playbackRate = 0.75;});
+      fnConstructById("1", "click", function() {document.querySelector("video").playbackRate = 1;});
+      fnConstructById("1.5", "click", function() {document.querySelector("video").playbackRate = 1.5;});
+      fnConstructById("2", "click", function() {document.querySelector("video").playbackRate = 2;});
 
       //Choose Video File
-
-            document.querySelector('.mute').addEventListener('click',function(){
-              console.log('mute');
-                  document.querySelector('video').muted = true;
-              });
-
-              document.querySelector('.unmute').addEventListener('click',function(){
-                  document.querySelector('video').muted = false;
-              });
-
+      
+      fnConstruct(".mute", "click", function() {document.querySelector("video").muted = true;});
+      fnConstruct(".unmute", "click", function() {document.querySelector("video").muted = false;});
 
       //Enable & Disable Controls
-              document
-                .querySelector(".enableBtn")
-                .addEventListener("click", function() {
-                  console.log("enable controls");
-                  document.querySelector("video").removeAttribute("controls");
-                  document.querySelector("video").setAttribute("controls", "");
-                });
 
-              document
-                .querySelector(".disableBtn")
-                .addEventListener("click", function() {
-                  console.log("disable controls");
-                  document.querySelector("video").removeAttribute("controls");
-                });
+      fnConstruct(".enableBtn", "click", function() {document.querySelector("video").removeAttribute("controls");
+          document.querySelector("video").setAttribute("controls", "");});
+     
+      fnConstruct(".disableBtn", "click", function() {document.querySelector("video").removeAttribute("controls");});
 
-      //Change Width Repetative Code
-              document.getElementById("200").addEventListener("click", function() {
-                document.querySelector("video").removeAttribute("width");
-                document.querySelector("video").setAttribute("width", 200);
-              });
+      // Change Width via loop
+      var widthChanger = function(width) {
+        document.querySelector("video").setAttribute("width", width);
+      };
 
-              document.getElementById("400").addEventListener("click", function() {
-                document.querySelector("video").removeAttribute("width");
-                document.querySelector("video").setAttribute("width", 400);
-              });
+      var buttons = document.getElementsByClassName("btn btn-sm btn-success w");
+      for (var i = 0; i < buttons.length; i += 1) {
+        buttons[i].onclick = function(e) {
+          var wId = this.id;
+          if (wId == "initial") {
+            widthChanger(400);
+          } else {
+            widthChanger(wId);
+          }
+        };
+      }
 
-              document.getElementById("600").addEventListener("click", function() {
-                document.querySelector("video").removeAttribute("width");
-                document.querySelector("video").setAttribute("width", 600);
-              });
+      //Forward & Backward Video
+    fnConstruct(".Forward", "click", function() {document.querySelector("video").currentTime = document.querySelector("video").currentTime + 10;});
+    fnConstruct(".Backward", "click", function() {document.querySelector("video").currentTime = document.querySelector("video").currentTime - 10;});
+    });
 
-              document.getElementById("800").addEventListener("click", function() {
-                document.querySelector("video").removeAttribute("width");
-                document.querySelector("video").setAttribute("width", 800);
-              });
-
-              document.getElementById("initial").addEventListener("click", function() {
-                document.querySelector("video").removeAttribute("width");
-                document.querySelector("video").setAttribute("width", 500);
-              });
-            });
-
-    // Change Width
-    // var widthChanger = function(width){
-    // 	document.querySelector(".w" + width).addEventListener("click", function() {
-    //   console.log("disable controls");
-    //   document.querySelector("video").removeAttribute("controls");
-    // 	});
-    // }
-
-    // var buttons = document.getElementsByTagName("button");
-    // var buttonsCount = buttons.length;
-    // for (var i = 0; i <= buttonsCount; i += 1) {
-    //     buttons[i].onclick = function(e) {
-    //         alert(this.id);
-    //     };
-    // }
-    // });
+    
+    
   </script>
 </html>
-
-<!-- //Dry Principle -->
-
-<!-- var fnConstruct = function(element,event, action){
-    	document.querySelector(this.element).addEventListener(this.event, function(){
-    		this.action;
-    	});
-    }
-    
-    var enableControls = 'console.log("enable controls");document.querySelector("video").removeAttribute("controls");document.querySelector("video").setAttribute("controls", "");';
-    fnConstruct('.enableBtn','click',enableControls);
-
-    var disableControls = 'console.log("disable controls");document.querySelector("video").removeAttribute("controls");';
-    fnConstruct('.disableBtn','click',disableControls); -->
