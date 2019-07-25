@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY="
+      crossorigin="anonymous"/>
+  </head>
+  <body>
+    <h2 class="text-warning text-center">
+      Video Player DOM Manipulation Using using Pure JS
+    </h2>
+    <p class="text-center">I have used Dry Principle so that code is compact</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <video
+            class="mx-auto"
+            src="video\Improving Load Performance - Chrome DevTools 101.mp4"
+            width="500px"
+            autoplay="true"
+            controls
+          ></video>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-md-3 mx-auto">
+          <p class="text-danger font-weight-bold">Pause / Play :-</p>
+          <button class="btn btn-sm btn-success pause">Pause</button>
+          <button class="btn btn-sm btn-success play">Play</button>
+        </div>
+
+        <div class="col-md-4 mx-auto">
+          <p class="text-danger font-weight-bold">PlayBack Speed :-</p>
+          <button class="btn btn-sm btn-success" id="0.25">0.25x</button>
+          <button class="btn btn-sm btn-success" id="0.5">0.5x</button>
+          <button class="btn btn-sm btn-success" id="0.75">0.75x</button>
+          <button class="btn btn-sm btn-success" id="1">Normal</button>
+          <button class="btn btn-sm btn-success" id="1.5">1.5x</button>
+          <button class="btn btn-sm btn-success" id="2">2.0x</button>
+        </div>
+
+        <div class="col-md-3 mx-auto">
+          <p class="text-danger font-weight-bold">Mute/Unmute Volume :-</p>
+          <button class="btn btn-sm btn-success mute">Mute</button>
+          <button class="btn btn-sm btn-danger unmute">Unmute</button>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-md-3 mx-auto">
+          <p class="text-warning font-weight-bold">Controls :-</p>
+          <button class="btn btn-sm btn-success enableBtn">Enable</button>
+          <button class="btn btn-sm btn-success disableBtn">Disable</button>
+        </div>
+
+        <div class="col-md-6 mx-auto">
+            <p class="text-info font-weight-bold">Width :-</p>
+            <button class="btn btn-sm btn-success w" id="initial">Initial</button>
+            <button class="btn btn-sm btn-success w" id="200">200px</button>
+            <button class="btn btn-sm btn-success w" id="300">300px</button>
+            <button class="btn btn-sm btn-success w" id="500">500px</button>
+            <button class="btn btn-sm btn-success w" id="600">600px</button>
+        </div>
+
+        <div class="col-md-3 mx-auto">
+            <p class="text-warning font-weight-bold">Seek :-</p>
+            <button class="btn btn-sm btn-success Forward">10 sec ></button>
+            <button class="btn btn-sm btn-success Backward"> < 10 sec </button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      //OnClick Event Constructor Using querySelector
+      var fnConstruct = function(element, event, action) {
+          document
+            .querySelector(element)
+            .addEventListener(event, function() {
+              action();
+            });
+        };
+      
+      //OnClick Event Constructor Using getElementById
+      var fnConstructById = function(element, event, action) {
+          document
+            .getElementById(element)
+            .addEventListener(event, function() {
+              action();
+            });
+        };
+
+
+      //Pause & Play Control
+      fnConstruct(".pause", "click", function() {document.querySelector("video").pause();});
+
+      fnConstruct(".play", "click", function() {document.querySelector("video").play();});
+        
+
+      //PlayBack Control
+
+      fnConstructById("0.25", "click", function() {document.querySelector("video").playbackRate = 0.25;});
+      fnConstructById("0.5", "click", function() {document.querySelector("video").playbackRate = 0.5;});
+      fnConstructById("0.75", "click", function() {document.querySelector("video").playbackRate = 0.75;});
+      fnConstructById("1", "click", function() {document.querySelector("video").playbackRate = 1;});
+      fnConstructById("1.5", "click", function() {document.querySelector("video").playbackRate = 1.5;});
+      fnConstructById("2", "click", function() {document.querySelector("video").playbackRate = 2;});
+
+      //Choose Video File
+      
+      fnConstruct(".mute", "click", function() {document.querySelector("video").muted = true;});
+      fnConstruct(".unmute", "click", function() {document.querySelector("video").muted = false;});
+
+      //Enable & Disable Controls
+
+      fnConstruct(".enableBtn", "click", function() {document.querySelector("video").removeAttribute("controls");
+          document.querySelector("video").setAttribute("controls", "");});
+     
+      fnConstruct(".disableBtn", "click", function() {document.querySelector("video").removeAttribute("controls");});
+
+      // Change Width via loop
+      var widthChanger = function(width) {
+        document.querySelector("video").setAttribute("width", width);
+      };
+
+      var buttons = document.getElementsByClassName("btn btn-sm btn-success w");
+      for (var i = 0; i < buttons.length; i += 1) {
+        buttons[i].onclick = function(e) {
+          var wId = this.id;
+          if (wId == "initial") {
+            widthChanger(400);
+          } else {
+            widthChanger(wId);
+          }
+        };
+      }
+
+      //Forward & Backward Video
+    fnConstruct(".Forward", "click", function() {document.querySelector("video").currentTime = document.querySelector("video").currentTime + 10;});
+    fnConstruct(".Backward", "click", function() {document.querySelector("video").currentTime = document.querySelector("video").currentTime - 10;});
+    });
+
+    
+    
+  </script>
+</html>
